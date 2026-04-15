@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEPKA_KG — Premium Style Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(124,58,237,0.08);
+            --bg-glass: rgba(255,255,255,0.06);
+            --border-glass: rgba(124,58,237,0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #c0c0d0;
+            --text-muted: #808090;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --accent-glow: rgba(124,58,237,0.5);
+            --neon-blue: #00d4ff;
+            --neon-pink: #ff006e;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius: 14px;
+            --radius-lg: 22px;
+            --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+            --shadow-glow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0,212,255,0.2);
+            --shadow-hover: 0 8px 40px rgba(124,58,237,0.4);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f0f0f5;
+            --bg-secondary: #ffffff;
+            --bg-card: rgba(124,58,237,0.06);
+            --bg-glass: rgba(255,255,255,0.85);
+            --border-glass: rgba(124,58,237,0.2);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #808090;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: var(--transition);
+            background-image: 
+                radial-gradient(ellipse at 20% 80%, rgba(124,58,237,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,212,255,0.12) 0%, transparent 50%);
+        }
+
+        /* ✅ Бирдей шрифт системасы */
+        h1, h2, h3, h4 { 
+            font-family: 'Space Grotesk', sans-serif; 
+            font-weight: 700; 
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        p, span, a, button, input, select, textarea { 
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem; 
+            font-weight: 500; 
+        }
+        
+        /* ✅ Анимациялар */
+        @keyframes glow { 0%,100% { box-shadow: var(--shadow-glow); } 50% { box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(0,212,255,0.3); } }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes sparkle { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.9); } }
+
+        .animate-glow { animation: glow 3s ease-in-out infinite; }
+        .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-gradient { 
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue), var(--neon-pink), var(--accent));
+            background-size: 300% 300%;
+            animation: gradientShift 5s ease infinite;
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        /* ✅ Навигация */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;
+            background: var(--bg-glass); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass); transition: var(--transition);
+            border-top: 1px solid rgba(124,58,237,0.2);
+        }
+        .navbar.scrolled { padding: 10px 28px; background: rgba(10,10,15,0.95); box-shadow: var(--shadow); }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.7rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-light), var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            cursor: pointer; letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(124,58,237,0.4);
+        }
+        .nav-logo span { color: var(--neon-blue); -webkit-text-fill-color: var(--neon-blue); }
+
+        .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem; font-weight: 600;
+            position: relative; transition: var(--transition); padding: 6px 0;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--neon-blue));
+            transition: var(--transition); border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .nav-links a:hover { color: var(--text-primary); text-shadow: 0 0 12px var(--accent-glow); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-actions { display: flex; align-items: center; gap: 14px; }
+        
+        .nav-btn {
+            background: none; border: none; color: var(--text-secondary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 600; cursor: pointer; 
+            padding: 10px 18px; border-radius: 12px;
+            transition: var(--transition); display: flex; align-items: center; gap: 7px;
+            position: relative; overflow: hidden;
+        }
+        .nav-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue));
+            opacity: 0; transition: var(--transition); z-index: -1; border-radius: 12px;
+        }
+        .nav-btn:hover::before { opacity: 1; }
+        .nav-btn:hover { color: white; transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        
+        .btn-add {
+            background: linear-gradient(135deg, var(--accent), #6d28d9);
+            color: white !important; padding: 10px 20px !important;
+            border-radius: 12px !important; font-weight: 700 !important;
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+        .btn-add:hover { transform: translateY(-3px); box-shadow: var(--shadow-glow); animation: pulse 2s infinite; }
+
+        .cart-count {
+            position: absolute; top: -3px; right: -3px; 
+            background: linear-gradient(135deg, var(--neon-pink), var(--warning));
+            color: white; font-size: 0.75rem; font-weight: 700;
+            width: 20px; height: 20px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transform: scale(0); transition: var(--transition);
+            box-shadow: 0 0 12px rgba(255,0,110,0.5);
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+        .cart-count.show { transform: scale(1); }
+
+        .burger { 
+            display: none; flex-direction: column; gap: 5px; cursor: pointer; 
+            padding: 8px; border-radius: 10px; transition: var(--transition);
+        }
+        .burger:hover { background: var(--bg-glass); }
+        .burger span { 
+            width: 26px; height: 3px; background: var(--text-primary); 
+            border-radius: 3px; transition: var(--transition);
+            box-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+        .burger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .burger.active span:nth-child(2) { opacity: 0; }
+        .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+        .mobile-menu {
+            display: none; position: fixed; inset: 0; 
+            background: linear-gradient(135deg, rgba(10,10,15,0.98), rgba(124,58,237,0.15));
+            backdrop-filter: blur(24px); z-index: 999; 
+            flex-direction: column; align-items: center; justify-content: center; 
+            gap: 28px; opacity: 0; pointer-events: none; transition: var(--transition);
+        }
+        .mobile-menu.active { opacity: 1; pointer-events: all; }
+        .mobile-menu a {
+            color: var(--text-primary); text-decoration: none; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem; font-weight: 700;
+            transition: var(--transition); padding: 8px 24px;
+            border-radius: 14px; position: relative;
+        }
+        .mobile-menu a::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue));
+            opacity: 0; border-radius: 14px; transition: var(--transition); z-index: -1;
+        }
+        .mobile-menu a:hover::before { opacity: 0.2; }
+        .mobile-menu a:hover { transform: scale(1.05); text-shadow: 0 0 20px var(--accent-glow); }
+
+        /* ✅ Hero Section — Expanded */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; padding: 120px 24px 80px;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at center, rgba(124,58,237,0.25) 0%, transparent 70%),
+                        radial-gradient(ellipse at 80% 20%, rgba(0,212,255,0.15) 0%, transparent 50%);
+        }
+        .hero-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .particle {
+            position: absolute; width: 4px; height: 4px;
+            background: var(--accent-light); border-radius: 50%;
+            animation: float 6s ease-in-out infinite; opacity: 0.6;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+        .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+        
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 20px; background: var(--bg-glass);
+            border: 1px solid var(--border-glass); border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem; font-weight: 600; color: var(--accent-light); 
+            margin-bottom: 24px; backdrop-filter: blur(12px);
+            animation: slideUp 0.6s ease forwards;
+            box-shadow: 0 4px 20px rgba(124,58,237,0.2);
+        }
+        .hero-badge i { animation: pulse 2s infinite; color: var(--neon-blue); }
+        
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 800;
+            line-height: 1.05; margin-bottom: 20px; 
+            animation: slideUp 0.6s ease 0.15s forwards; opacity: 0;
+            text-shadow: 0 0 30px rgba(124,58,237,0.4);
+        }
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--accent-light), var(--neon-blue), var(--neon-pink), var(--accent-light));
+            background-size: 300% 300%; -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+            animation: gradientShift 4s ease infinite;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.15rem; color: var(--text-secondary);
+            margin-bottom: 28px; max-width: 650px; margin-left: auto; margin-right: auto;
+            animation: slideUp 0.6s ease 0.3s forwards; opacity: 0;
+            line-height: 1.7;
+        }
+        
+        .hero-description {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 32px;
+            backdrop-filter: blur(16px); animation: slideUp 0.6s ease 0.45s forwards; opacity: 0;
+            text-align: left;
+        }
+        .hero-description p { margin-bottom: 10px; color: var(--text-secondary); }
+        .hero-description p:last-child { margin-bottom: 0; }
+        .hero-description strong { color: var(--accent-light); }
+        
+        .hero-buttons {
+            display: flex; align-items: center; justify-content: center; gap: 16px;
+            flex-wrap: wrap; animation: slideUp 0.6s ease 0.6s forwards; opacity: 0;
+        }
+        
+        .btn-primary {
+            padding: 14px 32px; 
+            background: linear-gradient(135deg, var(--accent), #6d28d9);
+            color: white; border: none; border-radius: 14px; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 700; cursor: pointer; 
+            transition: var(--transition); text-decoration: none; 
+            display: inline-flex; align-items: center; gap: 10px;
+            position: relative; overflow: hidden; box-shadow: 0 6px 24px var(--accent-glow);
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: translateX(-100%); transition: var(--transition);
+        }
+        .btn-primary:hover::before { transform: translateX(100%); }
+        .btn-primary:hover { transform: translateY(-4px); box-shadow: var(--shadow-glow); }
+        
+        .btn-outline {
+            padding: 14px 32px; background: transparent; color: var(--text-primary);
+            border: 2px solid var(--border-glass); border-radius: 14px; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 700; cursor: pointer; 
+            transition: var(--transition); text-decoration: none; 
+            display: inline-flex; align-items: center; gap: 10px;
+            backdrop-filter: blur(12px); position: relative; overflow: hidden;
+        }
+        .btn-outline::before {
+            content: ''; position: absolute; inset: -2px;
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue), var(--neon-pink));
+            opacity: 0; border-radius: 16px; transition: var(--transition); z-index: -1;
+        }
+        .btn-outline:hover::before { opacity: 1; }
+        .btn-outline:hover { transform: translateY(-4px); color: white; border-color: transparent; }
+
+        .hero-stats {
+            display: flex; align-items: center; justify-content: center; gap: 40px;
+            margin-top: 48px; animation: slideUp 0.6s ease 0.75s forwards; opacity: 0;
+        }
+        .stat { text-align: center; padding: 16px 24px; background: var(--bg-glass); 
+            border: 1px solid var(--border-glass); border-radius: var(--radius-lg);
+            backdrop-filter: blur(12px); min-width: 120px;
+            transition: var(--transition);
+        }
+        .stat:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: var(--shadow-hover); }
+        .stat-number { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem; font-weight: 800; 
+            background: linear-gradient(135deg, var(--accent-light), var(--neon-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(124,58,237,0.3);
+        }
+        .stat-label { font-size: 0.9rem; color: var(--text-muted); margin-top: 6px; }
+
+        /* ✅ Sections */
+        .section { padding: 70px 24px; max-width: 1280px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-label {
+            display: inline-flex; align-items: center; gap: 8px; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem; color: var(--accent-light); 
+            text-transform: uppercase; letter-spacing: 3px;
+            font-weight: 700; margin-bottom: 16px;
+            padding: 6px 18px; background: var(--bg-glass);
+            border: 1px solid var(--border-glass); border-radius: 50px;
+        }
+        .section-title { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem; font-weight: 800; margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .section-desc { font-size: 1.05rem; color: var(--text-secondary); max-width: 550px; margin: 0 auto; }
+
+        /* ✅ About Cards */
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .about-card {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); padding: 28px 24px;
+            backdrop-filter: blur(16px); transition: var(--transition); text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .about-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(124,58,237,0.1), transparent);
+            opacity: 0; transition: var(--transition);
+        }
+        .about-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: var(--shadow-hover); }
+        .about-card:hover::before { opacity: 1; }
+        .about-icon {
+            width: 64px; height: 64px; 
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue));
+            border-radius: 18px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: white; margin: 0 auto 18px;
+            box-shadow: 0 8px 24px var(--accent-glow);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        .about-card h3 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; 
+        }
+        .about-card p { color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6; }
+
+        /* ✅ Catalog */
+        .catalog-filters {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin-bottom: 32px; flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 10px 22px; background: var(--bg-glass); 
+            border: 1px solid var(--border-glass); border-radius: 50px;
+            color: var(--text-secondary); font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.98rem; font-weight: 600; cursor: pointer; 
+            transition: var(--transition); backdrop-filter: blur(12px);
+            position: relative; overflow: hidden;
+        }
+        .filter-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue));
+            opacity: 0; transition: var(--transition); z-index: -1; border-radius: 50px;
+        }
+        .filter-btn:hover::before, .filter-btn.active::before { opacity: 1; }
+        .filter-btn:hover, .filter-btn.active {
+            color: white; border-color: var(--accent);
+            box-shadow: 0 4px 20px var(--accent-glow); transform: translateY(-2px);
+        }
+        .filter-btn.promo {
+            background: linear-gradient(135deg, var(--warning), var(--neon-pink));
+            color: white !important; border: none; animation: pulse 2s infinite;
+        }
+
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;
+        }
+        .product-card {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); overflow: hidden;
+            backdrop-filter: blur(16px); transition: var(--transition); position: relative;
+        }
+        .product-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: var(--shadow-hover); }
+        
+        .product-image { width: 100%; height: 240px; object-fit: cover; transition: var(--transition); }
+        .product-card:hover .product-image { transform: scale(1.06); }
+        .product-image-wrapper { overflow: hidden; position: relative; }
+        
+        .product-badge {
+            position: absolute; top: 12px; left: 12px; padding: 5px 12px;
+            background: var(--accent); color: white; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem; font-weight: 700; border-radius: 10px; text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(124,58,237,0.4);
+        }
+        .product-badge.promo { 
+            background: linear-gradient(135deg, var(--warning), var(--neon-pink));
+            animation: pulse 2s infinite;
+        }
+        
+        .product-info { padding: 18px; }
+        .product-category {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.82rem; color: var(--accent-light); text-transform: uppercase;
+            letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px;
+        }
+        .product-name { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; 
+        }
+        .product-price { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem; font-weight: 800; color: var(--neon-blue); 
+            margin-bottom: 14px; text-shadow: 0 0 12px rgba(0,212,255,0.3);
+        }
+        
+        .add-to-cart-btn {
+            width: 100%; padding: 12px; 
+            background: linear-gradient(135deg, var(--accent), #6d28d9);
+            color: white; border: none; border-radius: 12px; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.98rem; font-weight: 700; cursor: pointer; 
+            transition: var(--transition); display: flex;
+            align-items: center; justify-content: center; gap: 8px;
+            position: relative; overflow: hidden;
+        }
+        .add-to-cart-btn::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%); transition: var(--transition);
+        }
+        .add-to-cart-btn:hover::after { transform: translateX(100%); }
+        .add-to-cart-btn:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+        .add-to-cart-btn.added { background: var(--success); }
+
+        /* ✅ Checkout Section */
+        .checkout-section {
+            background: var(--bg-secondary); border-radius: var(--radius-lg);
+            padding: 36px 28px; margin: 0 auto; max-width: 1280px;
+            border: 1px solid var(--border-glass);
+            box-shadow: var(--shadow);
+        }
+        .checkout-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; }
+        @media (max-width: 900px) { .checkout-grid { grid-template-columns: 1fr; } }
+        
+        .checkout-form { display: flex; flex-direction: column; gap: 18px; }
+        .form-group label {
+            display: block; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem; color: var(--text-secondary);
+            margin-bottom: 8px; font-weight: 600;
+        }
+        .form-input, .form-select {
+            width: 100%; padding: 14px 16px; background: var(--bg-primary);
+            border: 1px solid var(--border-glass); border-radius: 12px;
+            color: var(--text-primary); font-size: 1rem; outline: none; 
+            transition: var(--transition); font-family: 'Inter', sans-serif;
+        }
+        .form-input:focus, .form-select:focus { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+        
+        .region-selector {
+            display: flex; flex-direction: column; gap: 12px;
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 12px; padding: 16px;
+        }
+        .region-row { display: flex; align-items: center; gap: 10px; }
+        .region-row select {
+            flex: 1; padding: 10px 14px; background: var(--bg-primary);
+            border: 1px solid var(--border-glass); border-radius: 10px;
+            color: var(--text-primary); font-size: 0.95rem; outline: none;
+        }
+        
+        .delivery-options { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+        .delivery-option {
+            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 12px; cursor: pointer; transition: var(--transition);
+        }
+        .delivery-option:hover, .delivery-option.selected {
+            border-color: var(--accent); background: rgba(124,58,237,0.12);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+        .delivery-option input { width: 20px; height: 20px; accent-color: var(--accent); }
+        
+        .payment-options { display: flex; gap: 14px; margin-top: 8px; }
+        .payment-option {
+            flex: 1; padding: 16px; background: var(--bg-glass);
+            border: 2px solid var(--border-glass); border-radius: 14px;
+            text-align: center; cursor: pointer; transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .payment-option::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue));
+            opacity: 0; transition: var(--transition); z-index: -1;
+        }
+        .payment-option:hover::before, .payment-option.selected::before { opacity: 0.15; }
+        .payment-option:hover, .payment-option.selected {
+            border-color: var(--accent); transform: translateY(-2px);
+        }
+        .payment-option i { font-size: 1.7rem; margin-bottom: 8px; display: block; }
+        .payment-option.mbank { color: #00a8e8; }
+        .payment-option.cash { color: var(--success); }
+        
+        .mbank-info {
+            background: linear-gradient(135deg, #0088cc, #00a8e8);
+            color: white; padding: 20px; border-radius: 14px;
+            margin: 18px 0; display: none; position: relative; overflow: hidden;
+        }
+        .mbank-info::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            animation: shimmer 3s infinite;
+        }
+        .mbank-info.active { display: block; animation: slideUp 0.3s ease; }
+        .mbank-info p { margin: 10px 0; font-size: 1rem; position: relative; z-index: 1; }
+        .mbank-number { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem; font-weight: 800; letter-spacing: 3px; 
+            position: relative; z-index: 1;
+        }
+        
+        .btn-confirm {
+            width: 100%; padding: 16px; 
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white; border: none; border-radius: 14px; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 700; cursor: pointer; 
+            transition: var(--transition); display: flex; 
+            align-items: center; justify-content: center; gap: 10px;
+            margin-top: 10px; position: relative; overflow: hidden;
+            box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+        }
+        .btn-confirm::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%); transition: var(--transition);
+        }
+        .btn-confirm:hover::after { transform: translateX(100%); }
+        .btn-confirm:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(37,211,102,0.5); }
+
+        /* ✅ Order Summary */
+        .order-summary-card {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); padding: 24px;
+            position: sticky; top: 100px; backdrop-filter: blur(16px);
+            box-shadow: var(--shadow);
+        }
+        .order-summary-card h3 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem; margin-bottom: 18px; 
+            display: flex; align-items: center; gap: 10px;
+        }
+        .checkout-cart-items { 
+            display: flex; flex-direction: column; gap: 12px; 
+            max-height: 220px; overflow-y: auto; margin-bottom: 20px;
+        }
+        .checkout-cart-item {
+            display: flex; gap: 12px; align-items: center;
+            padding: 10px; background: var(--bg-primary);
+            border-radius: 10px;
+        }
+        .checkout-cart-item img {
+            width: 52px; height: 52px; object-fit: cover; border-radius: 10px;
+        }
+        .checkout-cart-item .info { flex: 1; }
+        .checkout-cart-item .name { font-weight: 600; font-size: 0.95rem; }
+        .checkout-cart-item .qty { font-size: 0.85rem; color: var(--text-muted); }
+        .checkout-cart-item .price { 
+            font-weight: 700; color: var(--neon-blue); font-size: 0.95rem;
+        }
+        
+        .summary-divider {
+            border-top: 1px dashed var(--border-glass); margin: 16px 0; padding-top: 16px;
+        }
+        .summary-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 0;
+        }
+        .summary-row.total {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem; font-weight: 800; color: var(--neon-blue);
+            padding-top: 14px; border-top: 2px solid var(--accent); margin-top: 10px;
+            text-shadow: 0 0 12px rgba(0,212,255,0.3);
+        }
+        .summary-label { color: var(--text-secondary); }
+        .summary-value { font-weight: 600; }
+
+        /* ✅ Modal */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+            z-index: 3000; display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px); padding: 20px;
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        
+        .modal-card {
+            background: var(--bg-secondary); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); padding: 32px; width: 100%; max-width: 500px;
+            box-shadow: var(--shadow-glow); animation: slideUp 0.35s ease;
+            position: relative; overflow: hidden;
+        }
+        .modal-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--neon-blue), var(--neon-pink));
+            animation: gradientShift 3s ease infinite;
+        }
+        .modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 24px; padding-bottom: 18px; 
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .modal-header h3 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem; font-weight: 700; 
+            display: flex; align-items: center; gap: 12px;
+        }
+        .modal-close {
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 1.4rem; cursor: pointer; padding: 6px; border-radius: 10px;
+            transition: var(--transition);
+        }
+        .modal-close:hover { background: var(--bg-glass); color: var(--text-primary); }
+        
+        .order-summary { display: flex; flex-direction: column; gap: 14px; }
+        .summary-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 0; border-bottom: 1px dashed var(--border-glass);
+        }
+        .summary-row:last-child { border-bottom: none; }
+        .summary-row.total {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.35rem; font-weight: 800; color: var(--neon-blue);
+            padding-top: 14px; border-top: 2px solid var(--accent); margin-top: 10px;
+        }
+        
+        .payment-verify {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 12px; padding: 18px; margin: 16px 0;
+            text-align: center;
+        }
+        .payment-verify.warning {
+            border-color: var(--warning); background: rgba(245,158,11,0.1);
+        }
+        .payment-verify.success {
+            border-color: var(--success); background: rgba(16,185,129,0.1);
+        }
+        .payment-verify i { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .payment-verify.warning i { color: var(--warning); }
+        .payment-verify.success i { color: var(--success); }
+        
+        .payment-confirm-btn {
+            width: 100%; padding: 14px; 
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white; border: none; border-radius: 12px; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem; font-weight: 700; cursor: pointer; 
+            transition: var(--transition); margin-top: 18px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .payment-confirm-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(16,185,129,0.4); }
+        .payment-confirm-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* ✅ Reviews */
+        .reviews-container { max-width: 750px; margin: 0 auto; }
+        .review-form {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); padding: 28px; margin-bottom: 28px;
+            backdrop-filter: blur(16px);
+        }
+        .review-form h3 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem; margin-bottom: 18px; 
+        }
+        .star-rating { display: flex; gap: 8px; margin: 10px 0 18px; }
+        .star-rating i { 
+            font-size: 1.5rem; color: var(--text-muted); 
+            cursor: pointer; transition: var(--transition);
+        }
+        .star-rating i.active, .star-rating i:hover { 
+            color: var(--warning); text-shadow: 0 0 12px rgba(245,158,11,0.5); 
+        }
+        
+        .reviews-list { display: flex; flex-direction: column; gap: 14px; }
+        .review-card {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: var(--radius); padding: 20px; backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+        .review-card:hover { border-color: var(--accent); transform: translateX(4px); }
+        .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .review-avatar {
+            width: 40px; height: 40px; 
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue));
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 1rem;
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+        .review-meta h4 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; }
+        .review-meta .date { font-size: 0.85rem; color: var(--text-muted); }
+        .review-stars { color: var(--warning); margin-bottom: 8px; font-size: 0.9rem; }
+        .review-text { color: var(--text-secondary); font-size: 0.98rem; line-height: 1.6; }
+
+        /* ✅ Cart Sidebar */
+        .cart-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+            z-index: 2000; opacity: 0; pointer-events: none; transition: var(--transition);
+        }
+        .cart-overlay.active { opacity: 1; pointer-events: all; }
+        .cart-sidebar {
+            position: fixed; top: 0; right: -400px; width: 380px; max-width: 92vw;
+            height: 100vh; background: var(--bg-secondary);
+            border-left: 1px solid var(--border-glass); z-index: 2001;
+            display: flex; flex-direction: column; transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: -8px 0 40px rgba(0,0,0,0.4);
+        }
+        .cart-sidebar.active { right: 0; }
+        .cart-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--border-glass);
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--bg-glass);
+        }
+        .cart-header h2 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem; font-weight: 700; 
+            display: flex; align-items: center; gap: 10px;
+        }
+        .cart-close {
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 1.3rem; cursor: pointer; padding: 8px; border-radius: 10px;
+            transition: var(--transition);
+        }
+        .cart-close:hover { background: var(--bg-glass); color: var(--text-primary); }
+        
+        .cart-items { flex: 1; overflow-y: auto; padding: 16px 20px; }
+        .cart-item {
+            display: flex; gap: 14px; padding: 14px; background: var(--bg-glass);
+            border: 1px solid var(--border-glass); border-radius: 12px;
+            margin-bottom: 12px; backdrop-filter: blur(12px);
+            transition: var(--transition);
+        }
+        .cart-item:hover { border-color: var(--accent); transform: translateX(4px); }
+        .cart-item-img { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; }
+        .cart-item-info { flex: 1; }
+        .cart-item-name { font-weight: 600; font-size: 0.98rem; margin-bottom: 4px; }
+        .cart-item-price { color: var(--neon-blue); font-weight: 700; font-size: 0.95rem; }
+        .cart-item-qty { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+        .qty-btn {
+            width: 28px; height: 28px; background: var(--bg-primary);
+            border: 1px solid var(--border-glass); border-radius: 8px;
+            color: var(--text-primary); font-size: 0.95rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition);
+        }
+        .qty-btn:hover { border-color: var(--accent); background: var(--accent); }
+        .cart-item-remove {
+            background: none; border: none; color: var(--danger);
+            cursor: pointer; font-size: 1rem; padding: 6px; transition: var(--transition);
+        }
+        .cart-item-remove:hover { transform: scale(1.2); text-shadow: 0 0 10px rgba(239,68,68,0.5); }
+        
+        .cart-empty { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+        .cart-empty i { font-size: 3rem; margin-bottom: 16px; opacity: 0.25; }
+        
+        .cart-footer { padding: 20px 24px; border-top: 1px solid var(--border-glass); background: var(--bg-glass); }
+        .cart-total {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px; font-size: 1.1rem;
+        }
+        .cart-total-price { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem; font-weight: 800; color: var(--neon-blue);
+        }
+        
+        .checkout-cart-btn {
+            width: 100%; padding: 14px; 
+            background: linear-gradient(135deg, var(--accent), #6d28d9);
+            color: white; border: none; border-radius: 12px; 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 700; cursor: pointer; 
+            transition: var(--transition); display: flex; 
+            align-items: center; justify-content: center; gap: 10px;
+        }
+        .checkout-cart-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        /* ✅ Chat Widgets */
+        .chat-widget { 
+            position: fixed; bottom: 100px; right: 24px; z-index: 1500; 
+            display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+        }
+        .chat-toggle {
+            width: 54px; height: 54px; 
+            background: linear-gradient(135deg, #0088cc, #00a8e8);
+            border: none; border-radius: 50%; color: white; font-size: 1.4rem;
+            cursor: pointer; box-shadow: 0 6px 24px rgba(0,136,204,0.5);
+            transition: var(--transition); display: flex; align-items: center; justify-content: center;
+        }
+        .chat-toggle:hover { transform: scale(1.12); box-shadow: 0 8px 32px rgba(0,136,204,0.7); }
+        .chat-popup {
+            width: 300px; background: var(--bg-secondary); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-glow);
+            backdrop-filter: blur(20px); display: none; flex-direction: column; animation: slideUp 0.3s ease;
+        }
+        .chat-popup.active { display: flex; }
+        .chat-header {
+            padding: 14px 16px; background: linear-gradient(135deg, #0088cc, #00a8e8);
+            color: white; display: flex; align-items: center; justify-content: space-between;
+            font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem;
+        }
+        .chat-header .close { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; padding: 4px; border-radius: 8px; }
+        .chat-header .close:hover { background: rgba(255,255,255,0.2); }
+        .chat-messages { padding: 12px; max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .chat-message { padding: 8px 12px; border-radius: 12px; max-width: 85%; font-size: 0.95rem; }
+        .chat-message.user { align-self: flex-end; background: var(--accent); color: white; border-bottom-right-radius: 4px; }
+        .chat-message.bot { align-self: flex-start; background: var(--bg-glass); border: 1px solid var(--border-glass); border-bottom-left-radius: 4px; }
+        .chat-input-area { padding: 10px 12px; border-top: 1px solid var(--border-glass); display: flex; gap: 8px; }
+        .chat-input { flex: 1; padding: 10px 14px; background: var(--bg-primary); border: 1px solid var(--border-glass); border-radius: 24px; color: var(--text-primary); font-size: 0.95rem; outline: none; }
+        .chat-send { width: 36px; height: 36px; background: var(--accent); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .chat-send:hover { background: var(--accent-light); transform: scale(1.1); }
+
+        .chat-float { position: fixed; bottom: 28px; right: 24px; z-index: 1500; }
+        .chat-float-btn {
+            width: 58px; height: 58px; 
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            border: none; border-radius: 50%; color: white; font-size: 1.5rem;
+            cursor: pointer; box-shadow: 0 8px 32px rgba(37,211,102,0.5);
+            transition: var(--transition); display: flex; align-items: center; justify-content: center; 
+            animation: pulse 2.5s infinite;
+        }
+        .chat-float-btn:hover { transform: scale(1.15); box-shadow: 0 12px 40px rgba(37,211,102,0.7); }
+
+        /* ✅ Footer */
+        .footer {
+            background: var(--bg-secondary); border-top: 1px solid var(--border-glass);
+            padding: 48px 24px 28px; margin-top: 40px;
+        }
+        .footer-grid {
+            max-width: 1280px; margin: 0 auto; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-bottom: 32px;
+        }
+        .footer-brand .nav-logo { font-size: 1.8rem; margin-bottom: 16px; display: inline-block; }
+        .footer-brand p { color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; }
+        .footer-links h3 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; 
+        }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { 
+            color: var(--text-secondary); text-decoration: none; 
+            font-size: 0.98rem; transition: var(--transition);
+        }
+        .footer-links a:hover { color: var(--accent-light); text-shadow: 0 0 10px var(--accent-glow); }
+        .footer-social { display: flex; gap: 12px; margin-top: 16px; }
+        .footer-social a {
+            width: 42px; height: 42px; background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); text-decoration: none; transition: var(--transition);
+        }
+        .footer-social a:hover { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+        .footer-bottom {
+            max-width: 1280px; margin: 0 auto; padding-top: 20px;
+            border-top: 1px solid var(--border-glass); text-align: center;
+            color: var(--text-muted); font-size: 0.95rem;
+        }
+
+        /* ✅ Toast */
+        .toast-container { position: fixed; top: 80px; right: 20px; z-index: 5000; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            padding: 14px 22px; background: var(--bg-secondary); border: 1px solid var(--border-glass);
+            border-radius: 12px; color: var(--text-primary); font-size: 0.98rem; font-weight: 500;
+            display: flex; align-items: center; gap: 10px; backdrop-filter: blur(16px);
+            animation: slideUp 0.3s ease; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        .toast::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+        }
+        .toast.success::before { background: var(--success); }
+        .toast.error::before { background: var(--danger); }
+        .toast.info::before { background: var(--neon-blue); }
+        .toast.success { border-left: 3px solid var(--success); }
+        .toast.error { border-left: 3px solid var(--danger); }
+        .toast.info { border-left: 3px solid var(--neon-blue); }
+
+        /* ✅ Back to Top */
+        .back-to-top {
+            position: fixed; bottom: 95px; right: 24px; width: 44px; height: 44px;
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 50%; color: var(--text-primary); font-size: 1rem;
+            cursor: pointer; z-index: 1400; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: var(--transition); backdrop-filter: blur(12px);
+        }
+        .back-to-top.visible { opacity: 1; pointer-events: all; }
+        .back-to-top:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+        /* ✅ Preloader */
+        .preloader {
+            position: fixed; inset: 0; background: var(--bg-primary); z-index: 10000;
+            display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px;
+            transition: opacity 0.5s ease;
+        }
+        .preloader.hidden { opacity: 0; pointer-events: none; }
+        .preloader-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: pulse 1.5s infinite;
+        }
+        .preloader-bar { width: 200px; height: 4px; background: var(--border-glass); border-radius: 10px; overflow: hidden; }
+        .preloader-bar::after {
+            content: ''; display: block; width: 50%; height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--neon-blue));
+            border-radius: 10px; animation: shimmer 1.2s ease infinite;
+        }
+
+        /* ✅ Admin Panel */
+        .admin-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 3000;
+            display: none; align-items: center; justify-content: center; backdrop-filter: blur(12px);
+        }
+        .admin-overlay.active { display: flex; }
+        .admin-panel {
+            background: var(--bg-secondary); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); padding: 28px; width: 95%; max-width: 560px;
+            max-height: 92vh; overflow-y: auto; animation: slideUp 0.3s ease; position: relative;
+            box-shadow: var(--shadow-glow);
+        }
+        .admin-panel::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--neon-blue), var(--neon-pink));
+            animation: gradientShift 4s ease infinite;
+        }
+        .admin-panel h2 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem; font-weight: 700; margin-bottom: 22px; 
+            display: flex; align-items: center; gap: 12px;
+        }
+        .admin-close {
+            position: absolute; top: 20px; right: 20px; background: none; border: none;
+            color: var(--text-secondary); font-size: 1.4rem; cursor: pointer; padding: 6px;
+            border-radius: 10px; transition: var(--transition);
+        }
+        .admin-close:hover { color: var(--danger); background: var(--bg-glass); }
+        
+        .admin-login { text-align: center; }
+        .admin-login input {
+            width: 100%; padding: 14px 16px; background: var(--bg-primary);
+            border: 1px solid var(--border-glass); border-radius: 12px;
+            color: var(--text-primary); font-size: 1rem; margin: 14px 0; text-align: center; outline: none;
+        }
+        .admin-login input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
+        
+        .admin-form { margin-top: 22px; }
+        .admin-form h3 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; color: var(--accent-light); 
+        }
+        .admin-form .form-group { margin-bottom: 14px; }
+        .admin-form select, .admin-form input[type="text"], .admin-form input[type="number"], .admin-form input[type="file"] {
+            width: 100%; padding: 12px 16px; background: var(--bg-primary);
+            border: 1px solid var(--border-glass); border-radius: 12px;
+            color: var(--text-primary); font-size: 1rem; outline: none; transition: var(--transition);
+        }
+        .admin-form select:focus, .admin-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-glow); }
+        
+        .image-preview-container { margin: 10px 0; display: none; }
+        .image-preview-container.active { display: block; }
+        .image-preview { width: 100%; max-height: 180px; object-fit: contain; border-radius: 12px; border: 1px solid var(--border-glass); background: var(--bg-primary); }
+        .image-preview-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; }
+        
+        .checkbox-group { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+        .checkbox-group input { width: 20px; height: 20px; accent-color: var(--accent); }
+        .checkbox-group label { font-size: 0.98rem; color: var(--text-secondary); cursor: pointer; }
+        
+        .admin-products-list { margin-top: 24px; }
+        .admin-product-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px; background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 12px; margin-bottom: 8px; transition: var(--transition);
+        }
+        .admin-product-item:hover { border-color: var(--accent); transform: translateX(4px); }
+        .admin-product-item img { width: 48px; height: 48px; object-fit: cover; border-radius: 10px; }
+        .admin-product-item .info { flex: 1; margin-left: 12px; }
+        .admin-product-item .info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; }
+        .admin-product-item .info span { font-size: 0.85rem; color: var(--text-muted); }
+        .admin-product-item .info .promo-tag { font-size: 0.75rem; color: var(--warning); margin-left: 6px; }
+        .admin-actions { display: flex; gap: 4px; }
+        .edit-btn, .delete-btn {
+            background: none; border: none; cursor: pointer; font-size: 1rem;
+            padding: 8px; transition: var(--transition); border-radius: 8px;
+        }
+        .edit-btn { color: var(--accent-light); }
+        .edit-btn:hover { background: rgba(124,58,237,0.15); }
+        .delete-btn { color: var(--danger); }
+        .delete-btn:hover { background: rgba(239,68,68,0.15); }
+        
+        .admin-logout {
+            margin-top: 20px; padding: 12px 24px; background: var(--danger);
+            color: white; border: none; border-radius: 12px; font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif; font-weight: 600; cursor: pointer; 
+            transition: var(--transition); width: 100%;
+        }
+        .admin-logout:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(239,68,68,0.4); }
+        
+        .edit-form {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 12px; padding: 18px; margin-bottom: 16px; display: none;
+        }
+        .edit-form.active { display: block; }
+        .edit-form h4 { 
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 700; margin-bottom: 12px; color: var(--accent-light); 
+        }
+        .edit-form .form-group { margin-bottom: 12px; }
+
+        /* ✅ Responsive */
+        @media (max-width: 900px) {
+            .navbar { padding: 12px 20px; }
+            .nav-links { display: none; }
+            .burger { display: flex; }
+            .mobile-menu { display: flex; }
+            .section { padding: 50px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .hero-stats { gap: 24px; }
+            .stat-number { font-size: 1.6rem; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+            .checkout-section { padding: 28px 20px; }
+            .footer { padding: 40px 20px 24px; }
+            .chat-widget { bottom: 90px; right: 20px; }
+            .chat-popup { width: 280px; }
+        }
+        @media (max-width: 520px) {
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+            .hero-stats { flex-direction: column; gap: 16px; }
+            .products-grid { grid-template-columns: 1fr; }
+            .catalog-filters { gap: 8px; }
+            .filter-btn { padding: 8px 16px; font-size: 0.92rem; }
+            .payment-options { flex-direction: column; }
+            .hero-title { font-size: 2.2rem; }
+            .section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">KEPKA_KG</div>
+        <div class="preloader-bar"></div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo" onclick="scrollToSection('hero')">KEPKA<span>_KG</span></div>
+        <ul class="nav-links">
+            <li><a href="#hero" onclick="scrollToSection('hero')">Башкы бет</a></li>
+            <li><a href="#about" onclick="scrollToSection('about')">Биз жөнүндө</a></li>
+            <li><a href="#catalog" onclick="scrollToSection('catalog')">Биздин товарлар</a></li>
+            <li><a href="#delivery" onclick="scrollToSection('delivery')">Жеткирүү</a></li>
+            <li><a href="#reviews" onclick="scrollToSection('reviews')">Сунуштар</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="nav-btn" onclick="toggleTheme()" title="Тема">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </button>
+            <button class="nav-btn btn-add" onclick="openAdmin()">Добавить</button>
+            <button class="nav-btn" onclick="openCart()" title="Себет">
+                <i class="fas fa-basket-shopping"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+            <div class="burger" id="burger" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#hero" onclick="closeMobileMenu(); scrollToSection('hero')">🏠 Башкы бет</a>
+        <a href="#about" onclick="closeMobileMenu(); scrollToSection('about')">⭐ Биз жөнүндө</a>
+        <a href="#catalog" onclick="closeMobileMenu(); scrollToSection('catalog')">🛍️ Биздин товарлар</a>
+        <a href="#delivery" onclick="closeMobileMenu(); scrollToSection('delivery')">🚚 Жеткирүү</a>
+        <a href="#reviews" onclick="closeMobileMenu(); scrollToSection('reviews')">💬 Сунуштар</a>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge animate-glow">
+                <i class="fas fa-bolt"></i> Premium кийимдер — Оштон бүт Кыргызстанга
+            </div>
+            <h1 class="hero-title">
+                Стиль — бул <span class="gradient-text" style="font-size: 48px;">сенин брендиң</span>
+            </h1>
+            <p class="hero-subtitle">
+                KEPKA_KG — сапаттуу, заманбап жана уникалдуу кийимдердин премиум дүйнөсү. 
+                Өзүңдүн стилинди тап, өзүңдү көрсөт!
+            </p>
+            
+            <div class="hero-description">
+                <p>✨ <strong>500+</strong> канааттанган кардарлар бизге ишенишет</p>
+                <p>🚀 <strong>100+</strong> уникалдуу товарлар — кепкалар, футболкалар, свитерлер, шымдар</p>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="#catalog" class="btn-primary animate-glow" onclick="scrollToSection('catalog')">
+                    <i class="fas fa-shopping-bag"></i> Товарларды көрүү
+                </a>
+                <a href="https://wa.me/996770095809" target="_blank" class="btn-outline">
+                    <i class="fab fa-whatsapp"></i> Байланыш
+                </a>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat animate-float" style="animation-delay: 0s">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Канааттанган кардарлар</div>
+                </div>
+                <div class="stat animate-float" style="animation-delay: 0.2s">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Товарлар</div>
+                </div>
+                <div class="stat animate-float" style="animation-delay: 0.4s">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Облуска жеткируу</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="section-header">
+            <div class="section-label"><i class="fas fa-star"></i> Биз жөнүндө</div>
+            <h2 class="hero-subtitle" style="font-size: 48px;">Эмне үчүн биз?</h2>
+            <p class="section-desc">Сапат менен стильди айкалыштырган премиум бренд</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="about-icon"><i class="fas fa-gem"></i></div>
+                <h3>Жогорку сапат</h3>
+                <p>Ар бир товар текшерилген материалдардан жасалган. Биз сапатка кепилдик беребиз.</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon"><i class="fas fa-truck-fast"></i></div>
+                <h3>Тез жеткирүү</h3>
+                <p>Бүт Кыргызстан боюнча 1-3 күндө жеткирүү. Ошто — ошол күнү.</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon"><i class="fas fa-headset"></i></div>
+                <h3>24/7 колдоо</h3>
+                <p>WhatsApp аркылуу каалаган убакта байланышыңыз. Биз ар дайым жардамга даярбыз.</p>
+            </div>
+            <div class="about-card">
+                <div class="about-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3>Кепилдик</h3>
+                <p>Товар жакпаса — 7 күндүн ичинде акчаңызды кайтарып алыңыз.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="catalog">
+        <div class="section-header">
+            <div class="section-label"><i class="fas fa-fire"></i> Биздин товарлар</div>
+            <h2 class="section-title">Товарлор</h2>
+            <p class="section-desc">Сиздин стилиңизге ылайыктуу товарды тандаңыз</p>
+        </div>
+        <div class="catalog-filters">
+            <button class="filter-btn active" onclick="filterProducts('all')">Баары</button>
+            <button class="filter-btn" onclick="filterProducts('kepka')">🧢 Кепкалар</button>
+            <button class="filter-btn" onclick="filterProducts('footballka')">👕 Футболкалар</button>
+            <button class="filter-btn" onclick="filterProducts('sviter')">🧥 Свитерлер</button>
+            <button class="filter-btn" onclick="filterProducts('shym')">👖 Шымдар</button>
+            <button class="filter-btn promo" onclick="filterProducts('promo')">🔥 Акция</button>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <section class="section" id="delivery">
+        <div class="section-header">
+            <div class="section-label"><i class="fas fa-truck"></i> Жеткирүү</div>
+            <h2 class="section-title">Заказ берүү</h2>
+            <p class="section-desc">Маалыматтарыңызды толтуруңуз</p>
+        </div>
+        <div class="checkout-section">
+            <div class="checkout-grid">
+                <div class="checkout-form">
+                    <div class="form-group">
+                        <label>Аты-жөнү *</label>
+                        <input type="text" class="form-input" id="checkoutName" placeholder="Атыңыз">
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон *</label>
+                        <input type="tel" class="form-input" id="checkoutPhone" placeholder="+996 ___ ___ ___">
+                    </div>
+                    <div class="form-group">
+                        <label>Дарек *</label>
+                        <input type="text" class="form-input" id="checkoutAddress" placeholder="Көчө, үй, квартира">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Жеткирүү аймагы *</label>
+                        <div class="region-selector">
+                            <div class="region-row">
+                                <select class="form-select" id="checkoutOblast" onchange="updateDistricts()">
+                                    <option value="">Облус тандаңыз...</option>
+                                    <option value="osh">Ош облусу</option>
+                                    <option value="batken">Баткен облусу</option>
+                                    <option value="jalal">Жалал-Абад облусу</option>
+                                    <option value="naryn">Нарын облусу</option>
+                                    <option value="talas">Талас облусу</option>
+                                    <option value="chui">Чүй облусу</option>
+                                    <option value="issyk">Ысык-Көл облусу</option>
+                                </select>
+                            </div>
+                            <div class="region-row">
+                                <select class="form-select" id="checkoutDistrict" onchange="updateDeliveryPrice()">
+                                    <option value="">Район тандаңыз...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Төлөм түрү *</label>
+                        <div class="payment-options">
+                            <div class="payment-option mbank" onclick="selectPayment('online')" id="payOnline">
+                                <i class="fas fa-credit-card"></i>
+                                <div>Онлайн (MBank)</div>
+                            </div>
+                            <div class="payment-option cash" onclick="selectPayment('cash')" id="payCash">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <div>Накталай</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mbank-info" id="mbankInfo">
+                        <p><strong>📱 MBank аркылуу төлөңүз:</strong></p>
+                        <p class="mbank-number">+996 770 095 809</p>
+                        <p style="font-size: 0.9rem; opacity: 0.95;">Төлөгөндөн кийин "Төлөдүм" баскычын басыңыз</p>
+                        <button class="btn-primary" onclick="confirmPayment()" style="width: 100%; justify-content: center; margin-top: 12px; padding: 12px; font-size: 1rem;">
+                            <i class="fas fa-check"></i> Төлөдүм
+                        </button>
+                    </div>
+                    
+                    <button class="btn-confirm" onclick="placeOrder()">
+                        <i class="fas fa-paper-plane"></i> Заказ берүү
+                    </button>
+                </div>
+                
+                <div>
+                    <div class="order-summary-card">
+                        <h3><i class="fas fa-receipt"></i> Сиздин заказ</h3>
+                        <div class="checkout-cart-items" id="checkoutCartItems">
+                            <p style="color:var(--text-muted); text-align:center;">Себет бош</p>
+                        </div>
+                        <div class="summary-divider">
+                            <div class="summary-row">
+                                <span class="summary-label">Товарлар:</span>
+                                <span id="checkoutSubtotal" class="summary-value">0 сом</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">Жеткирүү:</span>
+                                <span id="checkoutDelivery" class="summary-value">0 сом</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Жалпы:</span>
+                                <span id="checkoutTotal">0 сом</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="reviews">
+        <div class="section-header">
+            <div class="section-label"><i class="fas fa-comment-dots"></i> Сунуштар</div>
+            <h2 class="section-title">Пикирлер</h2>
+            <p class="section-desc">Кардарлар эмне дешет?</p>
+        </div>
+        <div class="reviews-container">
+            <div class="review-form">
+                <h3>💬 Сиздин пикириңиз</h3>
+                <div class="form-group">
+                    <label>Атыңыз</label>
+                    <input type="text" class="form-input" id="reviewName" placeholder="Атыңыз...">
+                </div>
+                <div class="star-rating" id="starRating">
+                    <i class="far fa-star" data-rating="1"></i><i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i><i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <div class="form-group">
+                    <label>Пикириңиз</label>
+                    <textarea class="form-input" id="reviewText" placeholder="Жазыңыз..." style="min-height: 90px;"></textarea>
+                </div>
+                <button class="btn-primary" onclick="submitReview()" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-paper-plane"></i> Жөнөтүү
+                </button>
+            </div>
+            <div class="reviews-list" id="reviewsList"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="nav-logo">KEPKA<span>_KG</span></div>
+                <p>Кыргызстандын №1 премиум онлайн кийим дүкөнү. Стиль, сапат жана ыңгайлуулук — баары бир жерде!</p>
+                <div class="footer-social">
+                    <a href="https://wa.me/996770095809" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Навигация</h3>
+                <ul>
+                    <li><a href="#hero">🏠 Башкы бет</a></li>
+                    <li><a href="#about">⭐ Биз жөнүндө</a></li>
+                    <li><a href="#catalog">🛍️ Товарлар</a></li>
+                    <li><a href="#delivery">🚚 Жеткирүү</a></li>
+                    <li><a href="#reviews">💬 Пикирлер</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Байланыш</h3>
+                <ul>
+                    <li><a href="tel:+996770095809"><i class="fas fa-phone"></i> +996 770 095 809</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Ош шаары, Масалиева 26д</a></li>
+                    <li><a href="https://wa.me/996770095809"><i class="fab fa-whatsapp"></i> WhatsApp 24/7</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 KEPKA_KG — Бардык укуктар корголгон. Premium стиль, Ош шаарынан ❤️</p>
+        </div>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2><i class="fas fa-basket-shopping"></i> Себет</h2>
+            <button class="cart-close" onclick="closeCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty"><i class="fas fa-basket-shopping"></i><p>Себет бош</p></div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Жалпы:</span>
+                <span class="cart-total-price" id="cartTotal">0 сом</span>
+            </div>
+            <button class="checkout-cart-btn" onclick="goToCheckout()">
+                <i class="fas fa-arrow-right"></i> Жеткирүүгө өтүү
+            </button>
+        </div>
+    </div>
+
+    <!-- ORDER MODAL -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-check-circle"></i> Заказ!</h3>
+                <button class="modal-close" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <!-- Payment Verification Section -->
+            <div class="payment-verify warning" id="paymentVerify" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>⚠️ Төлөнүз!</strong>
+                <p style="margin-top: 8px; font-size: 0.95rem;">MBank аркылуу төлөмдү аткардыңызбы?</p>
+                <button class="btn-primary" onclick="confirmPaymentDone()" style="margin-top: 12px; padding: 10px; font-size: 0.95rem;">
+                    <i class="fas fa-check"></i> Ооба, төлөдүм
+                </button>
+            </div>
+            
+            <div class="order-summary">
+                <div class="summary-row"><span class="summary-label">Товарлар:</span><span class="summary-value" id="modalSubtotal">0 сом</span></div>
+                <div class="summary-row"><span class="summary-label">Жеткирүү:</span><span class="summary-value" id="modalDelivery">0 сом</span></div>
+                <div class="summary-row total"><span>Жалпы сумма:</span><span id="modalTotal">0 сом</span></div>
+            </div>
+            
+            <p style="margin-top: 20px; color: var(--text-secondary); font-size: 0.98rem; text-align: center;">
+                📱 Оператор сизге 5-10 мүнөттүн ичинде байланышат. Рахмат! 🙏
+            </p>
+            
+            <button class="payment-confirm-btn" id="finalConfirmBtn" onclick="finalizeOrder()" style="display: none;">
+                <i class="fas fa-check-double"></i> Тастыктоо жана бүтүрүү
+            </button>
+            
+            <button class="btn-primary" onclick="closeOrderModal()" style="width: 100%; justify-content: center; margin-top: 12px;" id="closeModalBtn">
+                <i class="fas fa-home"></i> Башкы бетке кайтуу
+            </button>
+        </div>
+    </div>
+
+    <!-- CHAT WIDGETS -->
+    <div class="chat-widget">
+        <div class="chat-popup" id="telegramChat">
+            <div class="chat-header">
+                <span><i class="fab fa-telegram-plane"></i> Telegram чат</span>
+                <button class="close" onclick="toggleTelegramChat()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">Салам! 👋 Сизге кандай жардам бере алам?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Жазыңыз..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+                <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="chat-toggle" onclick="toggleTelegramChat()"><i class="fab fa-telegram-plane"></i></button>
+    </div>
+
+    <div class="chat-float">
+        <a href="https://wa.me/996770095809" target="_blank">
+            <button class="chat-float-btn animate-pulse"><i class="fab fa-whatsapp"></i></button>
+        </a>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-overlay" id="adminOverlay">
+        <div class="admin-panel" id="adminPanel"></div>
+    </div>
+
+    <script>
+        // ✅ ТОВАРЛАР
+        const defaultProducts = {
+            kepka: [
+                { id: 'k1', name: 'Классикалык кепка', price: 850, image: 'https://pechat-pro.ru/wp-content/uploads/2019/05/vidy-kepok-8.jpg', badge: 'Хит', promo: false },
+                { id: 'k2', name: 'PUMA', price: 950, image: 'https://inter-sport.s3.amazonaws.com/products/024032/black_01/024032-1_resized_400X400.png', badge: 'Жаңы', promo: true },
+                { id: 'k3', name: 'RVCL', price: 750, image: 'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=400&q=80', badge: '', promo: false },
+                { id: 'k4', name: 'Стильный', price: 1100, image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400&q=80', badge: 'Premium', promo: false },
+                { id: 'k5', name: 'Классикалык кепка', price: 700, image: 'https://static.insales-cdn.com/images/products/1/5809/705107633/rothco_military_low_profile_olive_1.jpeg', badge: '', promo: true },
+                { id: 'k6', name: 'Nike', price: 900, image: 'https://amazingred.ru/upload/resize_cache/iblock/ab3/500_500_1/15zh16ssik7c5ikrqk95fryhg7sl6k9h.jpg', badge: '', promo: false },
+                { id: 'k7', name: 'LA', price: 1000, image: 'https://www.tempa.com.ua/wp-content/uploads/2023/05/shestipanelnaya-kepka-la-los-angeles-golubogo-czveta-s-logotipom-la-dlya-prodazhi-v-ukraine.jpg', badge: 'Жаңы', promo: false },
+                { id: 'k8', name: 'Thrasher', price: 850, image: 'https://www.34play.me/loaded/catalog/goods/thumbs/8de66b5f3a584c0bb171d18e2a4e0196.jpg', badge: '', promo: true },
+                { id: 'k9', name: 'Relax', price: 1200, image: 'https://rybolovnyi.ru/wa-data/public/shop/products/26/14/71426/images/133464/133464.970.jpg', badge: 'Хит', promo: false },
+                { id: 'k10', name: 'Turn', price: 1500, image: 'https://www.u-turn.ru/wp-content/uploads/2017/05/image_manager__product_image__k8a2566.jpg', badge: 'Premium', promo: false }
+            ],
+            footballka: [
+                { id: 'f1', name: 'Поло фудболка', price: 650, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80', badge: 'Хит', promo: true },
+                { id: 'f2', name: 'Hotel фудболка', price: 750, image: 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=400&q=80', badge: '', promo: false },
+                { id: 'f3', name: 'Nike фудболка', price: 850, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTprtMD8TdPeSIM8zTOMJ2yTEPQbPz8u5IgTA&s', badge: 'Жаңы', promo: false },
+                { id: 'f4', name: 'Oversize фудболка', price: 700, image: 'https://geksa-a.ru/image/cache/catalog/gifts/futbolki/IMG23d19b70fc7e18452ce5b5a70132f80d-500x400.jpg', badge: '', promo: true },
+                { id: 'f5', name: 'Oversize фудболка', price: 900, image: 'https://dubhumans.com/content/images/13/1350x1800l80mc0/mens-tshirt-03-black-xss-41763667168139.webp', badge: 'Premium', promo: false }
+            ],
+            sviter: [
+                { id: 's1', name: 'Серый свитер', price: 1400, image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&q=80', badge: 'Хит', promo: false },
+                { id: 's2', name: 'Белый свитер', price: 1600, image: 'https://ir.ozone.ru/s3/multimedia-1-e/c400/7137847850.jpg', badge: 'Жаңы', promo: true },
+                { id: 's3', name: 'Серый свитер', price: 1800, image: 'https://stockmann.ru/istk/oev2lBKwEGAQ-swsEhGGcXAwpqN2CqqU2dxJj8OEOIM/rs:fill:492::1/g:no/bG9jYWw6Ly8vdXBsb2FkLy9jbXMvc3RhdGljL2Zhc2hpb24tYmxvZy9hcnRpY2xlLzY5MjZjMzM0MjE3OTAxM2Q2YTAzNWFmNC9ibG9jay82OTgwYTQwZDgzNTQxNWNjMDAwMjdmODIvNTA1OWM2MzktMTBlOC00MDcyLWFlMTktOTNiY2E4MzQ3ZmVmLmpwZw.jpg', badge: 'Premium', promo: false },
+                { id: 's4', name: 'Белый свитер', price: 1500, image: 'https://main-cdn.sbermegamarket.ru/big1/hlr-system/-12/765/688/612/817/25/600009619535b0.jpeg', badge: '', promo: false },
+                { id: 's5', name: 'Зеленый свитер', price: 1350, image: 'https://azbukamoda.ru/wp-content/uploads/2024/11/28a374c5-9823-11ef-b071-08bfb86f294f_9637da93-9d18-11ef-b071-08bfb86f294f.jpg', badge: '', promo: true }
+            ],
+            shym: [
+                { id: 'sh1', name: 'Классический', price: 1200, image: 'https://faamo.ru/assets/1200_1800/uploads/product/751/1522.webp', badge: 'Хит', promo: false },
+                { id: 'sh2', name: 'Классический', price: 1000, image: 'https://static.zara.net/assets/public/338d/425c/33894e4d9fd8/242b981e2a4f/04725450250-p/04725450250-p.jpg?ts=1773750404664&w=352', badge: '', promo: true },
+                { id: 'sh3', name: 'Жынсы', price: 1300, image: 'https://ae-pic-a1.aliexpress-media.com/kf/S06b7460b82b94063b31a8db9e66bbdd8d.jpg_640x640.jpg', badge: 'Жаңы', promo: false },
+                { id: 'sh4', name: 'Спартивный', price: 1100, image: 'https://fromjapan.kg/uploads/catalog/products/thumb/1729314383_93949100.jpg', badge: '', promo: false },
+                { id: 'sh5', name: 'Классический', price: 1400, image: 'https://pizhon-store.ru/assets/images/products/9439/prod/a465d4d15fc3c354989c38b99496e5eb.webp', badge: 'Premium', promo: true }
+            ]
+        };
+
+        // ✅ 7 ОБЛУС + РАЙОНДОР
+        const kyrgyzstanRegions = {
+            osh: {
+                name: 'Ош облусу',
+                districts: [
+                    { name: 'Ош шаары', price: 0 },
+                    { name: 'Өзгөн району', price: 50 },
+                    { name: 'Кара-Суу району', price: 50 },
+                    { name: 'Ноокат району', price: 80 },
+                    { name: 'Алай району', price: 150 },
+                    { name: 'Чоң-Алай району', price: 200 },
+                    { name: 'Алайкуу району', price: 250 }
+                ]
+            },
+            batken: {
+                name: 'Баткен облусу',
+                districts: [
+                    { name: 'Баткен шаары', price: 400 },
+                    { name: 'Кызыл-Кыя шаары', price: 380 },
+                    { name: 'Лейлек району', price: 450 },
+                    { name: 'Кадамжай району', price: 420 },
+                    { name: 'Исфана шаары', price: 400 }
+                ]
+            },
+            jalal: {
+                name: 'Жалал-Абад облусу',
+                districts: [
+                    { name: 'Жалал-Абад шаары', price: 300 },
+                    { name: 'Көк-Жаңгак', price: 320 },
+                    { name: 'Кара-Көл', price: 350 },
+                    { name: 'Таш-Көмүр', price: 350 },
+                    { name: 'Сузак району', price: 280 },
+                    { name: 'Базар-Коргон району', price: 380 },
+                    { name: 'Ала-Бука району', price: 400 },
+                    { name: 'Аксы району', price: 420 },
+                    { name: 'Тогуз-Торо району', price: 450 },
+                    { name: 'Чаткал району', price: 500 }
+                ]
+            },
+            naryn: {
+                name: 'Нарын облусу',
+                districts: [
+                    { name: 'Нарын шаары', price: 350 },
+                    { name: 'Ат-Башы району', price: 400 },
+                    { name: 'Кочкор району', price: 380 },
+                    { name: 'Жумгал району', price: 420 },
+                    { name: 'Ак-Талаа району', price: 450 }
+                ]
+            },
+            talas: {
+                name: 'Талас облусу',
+                districts: [
+                    { name: 'Талас шаары', price: 300 },
+                    { name: 'Бакай-Ата району', price: 320 },
+                    { name: 'Кара-Буура району', price: 350 },
+                    { name: 'Манас району', price: 330 },
+                    { name: 'Талас району', price: 310 }
+                ]
+            },
+            chui: {
+                name: 'Чүй облусу',
+                districts: [
+                    { name: 'Бишкек шаары', price: 300 },
+                    { name: 'Токмок шаары', price: 250 },
+                    { name: 'Кара-Балта', price: 280 },
+                    { name: 'Кант', price: 260 },
+                    { name: 'Сокулук району', price: 240 },
+                    { name: 'Аламүдүн району', price: 250 },
+                    { name: 'Чүй району', price: 300 },
+                    { name: 'Жайыл району', price: 320 },
+                    { name: 'Панфилов району', price: 350 },
+                    { name: 'Московский району', price: 280 },
+                    { name: 'Ысык-Ата району', price: 290 }
+                ]
+            },
+            issyk: {
+                name: 'Ысык-Көл облусу',
+                districts: [
+                    { name: 'Каракол шаары', price: 300 },
+                    { name: 'Балыкчы шаары', price: 280 },
+                    { name: 'Түп району', price: 350 },
+                    { name: 'Жети-Өгүз району', price: 380 },
+                    { name: 'Ак-Суу району', price: 360 },
+                    { name: 'Тон району', price: 340 }
+                ]
+            }
+        };
+
+        // Global state
+        let cart = JSON.parse(localStorage.getItem('kepkg_cart') || '[]');
+        let selectedRating = 0;
+        let adminLoggedIn = false;
+        let editingProductId = null;
+        let editingProductCategory = null;
+        let selectedPayment = null;
+        let deliveryPrice = 0;
+        let paymentConfirmed = false;
+        const ADMIN_PASSWORD = 'kepkg2026';
+
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 1500);
+            createParticles();
+            loadAllProducts();
+            updateCartUI();
+            setupScrollAnimations();
+            setupStarRating();
+            loadReviews();
+            loadChatMessages();
+        });
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 6 + 's';
+                p.style.animationDuration = (5 + Math.random() * 5) + 's';
+                p.style.width = (3 + Math.random() * 4) + 'px';
+                p.style.height = p.style.width;
+                container.appendChild(p);
+            }
+        }
+
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.style.opacity = '1'; });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.product-card, .about-card, .stat').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                const backToTop = document.getElementById('backToTop');
+                navbar.classList.toggle('scrolled', window.scrollY > 50);
+                backToTop.classList.toggle('visible', window.scrollY > 400);
+            });
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('kepkg_theme', next);
+            document.getElementById('themeIcon').className = next === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        const savedTheme = localStorage.getItem('kepkg_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+
+        function toggleMobileMenu() {
+            const burger = document.getElementById('burger');
+            const menu = document.getElementById('mobileMenu');
+            burger.classList.toggle('active');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+        function closeMobileMenu() {
+            document.getElementById('burger').classList.remove('active');
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function loadAllProducts() {
+            const custom = JSON.parse(localStorage.getItem('kepkg_custom_products') || '{}');
+            const all = JSON.parse(JSON.stringify(defaultProducts));
+            for (const [cat, products] of Object.entries(custom)) {
+                if (!all[cat]) all[cat] = [];
+                all[cat] = [...all[cat], ...products];
+            }
+            window.allProductsData = all;
+            renderProducts('all');
+        }
+
+        function renderProducts(filter) {
+            const grid = document.getElementById('productsGrid');
+            let all = [];
+            for (const [cat, products] of Object.entries(window.allProductsData || defaultProducts)) {
+                products.forEach(p => all.push({ ...p, category: cat }));
+            }
+            let filtered = filter === 'all' ? all : filter === 'promo' ? all.filter(p => p.promo) : all.filter(p => p.category === filter);
+            
+            grid.innerHTML = filtered.map((p, i) => `
+                <div class="product-card" style="animation: slideUp 0.4s ease ${i*0.06}s forwards;">
+                    <div class="product-image-wrapper">
+                        <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy" onerror="this.src='https://via.placeholder.com/250x240?text=KEPKA_KG'">
+                        ${p.badge ? `<span class="product-badge ${p.promo ? 'promo' : ''}">${p.badge}</span>` : (p.promo ? '<span class="product-badge promo">Акция</span>' : '')}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${getCategoryName(p.category)}</div>
+                        <h3 class="product-name">${p.name}</h3>
+                        <div class="product-price">${p.price} сом</div>
+                        <button class="add-to-cart-btn" onclick="addToCartAndGo('${p.id}', '${p.category}')">
+                            <i class="fas fa-basket-shopping"></i> Себетке
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryName(cat) { return {kepka:'Кепка',footballka:'Футболка',sviter:'Свитер',shym:'Шым'}[cat] || cat; }
+        function filterProducts(filter) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(filter);
+        }
+
+        // ✅ Add to cart + auto go to checkout
+        function addToCartAndGo(productId, category) {
+            const all = window.allProductsData || defaultProducts;
+            const product = all[category]?.find(p => p.id === productId);
+            if (!product) return;
+            const existing = cart.find(i => i.id === productId);
+            if (existing) existing.qty += 1;
+            else cart.push({ ...product, qty: 1 });
+            localStorage.setItem('kepkg_cart', JSON.stringify(cart));
+            updateCartUI();
+            showToast(`${product.name} себетке кошулду! 🛒`, 'success');
+            setTimeout(() => { scrollToSection('delivery'); renderCheckoutCart(); updateCheckoutTotal(); }, 500);
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((s, i) => s + i.qty, 0);
+            const el = document.getElementById('cartCount');
+            el.textContent = count;
+            el.classList.toggle('show', count > 0);
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cartItems');
+            if (cart.length === 0) { container.innerHTML = `<div class="cart-empty"><i class="fas fa-basket-shopping"></i><p>Себет бош</p></div>`; return; }
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} сом</div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart('${item.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+            document.getElementById('cartTotal').textContent = cart.reduce((s, i) => s + i.price * i.qty, 0).toLocaleString() + ' сом';
+        }
+
+        function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); updateCartUI(); renderCartItems(); }
+        function updateQty(id, delta) {
+            const item = cart.find(i => i.id === id); if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) removeFromCart(id);
+            else { saveCart(); updateCartUI(); renderCartItems(); }
+        }
+        function saveCart() { localStorage.setItem('kepkg_cart', JSON.stringify(cart)); }
+
+        function openCart() {
+            document.getElementById('cartOverlay').classList.add('active');
+            document.getElementById('cartSidebar').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            renderCartItems();
+        }
+        function closeCart() {
+            document.getElementById('cartOverlay').classList.remove('active');
+            document.getElementById('cartSidebar').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function goToCheckout() {
+            if (cart.length === 0) { showToast('Себет бош!', 'error'); return; }
+            closeCart();
+            scrollToSection('delivery');
+            renderCheckoutCart();
+            updateCheckoutTotal();
+        }
+
+        function renderCheckoutCart() {
+            const container = document.getElementById('checkoutCartItems');
+            if (cart.length === 0) { container.innerHTML = '<p style="color:var(--text-muted); text-align:center;">Себет бош</p>'; return; }
+            container.innerHTML = cart.map(item => `
+                <div class="checkout-cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="info">
+                        <div class="name">${item.name}</div>
+                        <div class="qty">x${item.qty}</div>
+                    </div>
+                    <div class="price">${(item.price * item.qty).toLocaleString()} сом</div>
+                </div>
+            `).join('');
+        }
+
+        function updateCheckoutTotal() {
+            const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            document.getElementById('checkoutSubtotal').textContent = subtotal.toLocaleString() + ' сом';
+            document.getElementById('checkoutDelivery').textContent = deliveryPrice.toLocaleString() + ' сом';
+            document.getElementById('checkoutTotal').textContent = (subtotal + deliveryPrice).toLocaleString() + ' сом';
+        }
+
+        // ✅ Райондорду жаңыртуу
+        function updateDistricts() {
+            const oblast = document.getElementById('checkoutOblast').value;
+            const districtSelect = document.getElementById('checkoutDistrict');
+            districtSelect.innerHTML = '<option value="">Район тандаңыз...</option>';
+            if (!oblast || !kyrgyzstanRegions[oblast]) { updateDeliveryPrice(); return; }
+            kyrgyzstanRegions[oblast].districts.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d.name;
+                opt.textContent = `${d.name} — ${d.price} сом`;
+                opt.dataset.price = d.price;
+                districtSelect.appendChild(opt);
+            });
+            updateDeliveryPrice();
+        }
+
+        function updateDeliveryPrice() {
+            const districtSelect = document.getElementById('checkoutDistrict');
+            const selected = districtSelect.options[districtSelect.selectedIndex];
+            deliveryPrice = selected?.dataset?.price ? parseInt(selected.dataset.price) : 0;
+            updateCheckoutTotal();
+        }
+
+        function selectPayment(type) {
+            selectedPayment = type;
+            paymentConfirmed = false;
+            document.getElementById('payOnline').classList.toggle('selected', type === 'online');
+            document.getElementById('payCash').classList.toggle('selected', type === 'cash');
+            document.getElementById('mbankInfo').classList.toggle('active', type === 'online');
+        }
+
+        function confirmPayment() {
+            if (selectedPayment !== 'online') return;
+            showToast('✅ Төлөм кабыл алынды! Оператор байланышат.', 'success');
+            paymentConfirmed = true;
+        }
+
+        function placeOrder() {
+            const name = document.getElementById('checkoutName').value.trim();
+            const phone = document.getElementById('checkoutPhone').value.trim();
+            const address = document.getElementById('checkoutAddress').value.trim();
+            const oblast = document.getElementById('checkoutOblast').value;
+            const district = document.getElementById('checkoutDistrict').value;
+            
+            if (!name || !phone || !address || !oblast || !district || !selectedPayment) {
+                showToast('Бардык талааларды толтуруңуз!', 'error');
+                return;
+            }
+            if (cart.length === 0) { showToast('Себет бош!', 'error'); return; }
+            
+            const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            const total = subtotal + deliveryPrice;
+            
+            document.getElementById('modalSubtotal').textContent = subtotal.toLocaleString() + ' сом';
+            document.getElementById('modalDelivery').textContent = deliveryPrice.toLocaleString() + ' сом';
+            document.getElementById('modalTotal').textContent = total.toLocaleString() + ' сом';
+            
+            // ✅ Төлөм текшерүү логикасы
+            const paymentVerify = document.getElementById('paymentVerify');
+            const finalBtn = document.getElementById('finalConfirmBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            
+            if (selectedPayment === 'online' && !paymentConfirmed) {
+                paymentVerify.style.display = 'block';
+                finalBtn.style.display = 'none';
+                closeModalBtn.style.display = 'none';
+            } else {
+                paymentVerify.style.display = 'none';
+                finalBtn.style.display = 'flex';
+                closeModalBtn.style.display = 'flex';
+            }
+            
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function confirmPaymentDone() {
+            paymentConfirmed = true;
+            document.getElementById('paymentVerify').style.display = 'none';
+            document.getElementById('finalConfirmBtn').style.display = 'flex';
+            showToast('✅ Төлөм тастыкталды!', 'success');
+        }
+
+        function finalizeOrder() {
+            const name = document.getElementById('checkoutName').value;
+            const phone = document.getElementById('checkoutPhone').value;
+            const address = document.getElementById('checkoutAddress').value;
+            const oblast = document.getElementById('checkoutOblast').options[document.getElementById('checkoutOblast').selectedIndex].text;
+            const district = document.getElementById('checkoutDistrict').value;
+            const total = document.getElementById('modalTotal').textContent;
+            
+            let msg = `🛒 *ЖАҢЫ ЗАКАЗ!*\n👤 ${name}\n📱 ${phone}\n📍 ${oblast}, ${district}\n🏠 ${address}\n💳 ${selectedPayment === 'online' ? 'Онлайн (MBank) ✅' : 'Накталай'}\n`;
+            cart.forEach(i => msg += `• ${i.name} x${i.qty} — ${i.price * i.qty} сом\n`);
+            msg += `\n💰 *ЖАЛПЫ: ${total}*`;
+            
+            cart = []; saveCart(); updateCartUI(); renderCheckoutCart(); updateCheckoutTotal();
+            closeOrderModal();
+            
+            setTimeout(() => { window.open(`https://wa.me/996770095809?text=${encodeURIComponent(msg)}`, '_blank'); }, 300);
+            showToast('🎉 Заказ ийгиликтүү берилди!', 'success');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            ['checkoutName','checkoutPhone','checkoutAddress','checkoutOblast','checkoutDistrict'].forEach(id => {
+                const el = document.getElementById(id); if (el) el.value = '';
+            });
+            selectedPayment = null; paymentConfirmed = false;
+            document.getElementById('payOnline').classList.remove('selected');
+            document.getElementById('payCash').classList.remove('selected');
+            document.getElementById('mbankInfo').classList.remove('active');
+            document.getElementById('paymentVerify').style.display = 'none';
+            document.getElementById('finalConfirmBtn').style.display = 'none';
+            document.getElementById('closeModalBtn').style.display = 'flex';
+            deliveryPrice = 0; updateCheckoutTotal();
+        }
+
+        // Reviews
+        function setupStarRating() {
+            document.querySelectorAll('#starRating i').forEach(star => {
+                star.addEventListener('click', () => {
+                    selectedRating = parseInt(star.dataset.rating);
+                    document.querySelectorAll('#starRating i').forEach((s, i) => {
+                        s.className = i < selectedRating ? 'fas fa-star active' : 'far fa-star';
+                    });
+                });
+            });
+        }
+        function submitReview() {
+            const name = document.getElementById('reviewName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            if (!name || !text || selectedRating === 0) { showToast('Бардык талааларды толтуруңуз!', 'error'); return; }
+            const reviews = JSON.parse(localStorage.getItem('kepkg_reviews') || '[]');
+            reviews.unshift({ name, text, rating: selectedRating, date: new Date().toISOString(), id: 'r_' + Date.now() });
+            localStorage.setItem('kepkg_reviews', JSON.stringify(reviews));
+            document.getElementById('reviewName').value = '';
+            document.getElementById('reviewText').value = '';
+            selectedRating = 0;
+            document.querySelectorAll('#starRating i').forEach(s => s.className = 'far fa-star');
+            showToast('Рахмат! Пикириңиз кошулду! 💬', 'success');
+            loadReviews();
+        }
+        function loadReviews() {
+            const container = document.getElementById('reviewsList');
+            const reviews = JSON.parse(localStorage.getItem('kepkg_reviews') || '[]');
+            if (reviews.length === 0) {
+                container.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text-muted);"><i class="fas fa-comment" style="font-size:2.2rem;margin-bottom:12px;opacity:0.25;"></i><p>Азырынча пикирлер жок. Биринчи болуп жазыңыз!</p></div>`;
+                return;
+            }
+            container.innerHTML = reviews.map(r => `
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">${r.name.charAt(0).toUpperCase()}</div>
+                        <div class="review-meta"><h4>${escapeHtml(r.name)}</h4><span class="date">${formatDate(r.date)}</span></div>
+                    </div>
+                    <div class="review-stars">${'<i class="fas fa-star"></i>'.repeat(r.rating)}${'<i class="far fa-star"></i>'.repeat(5-r.rating)}</div>
+                    <p class="review-text">${escapeHtml(r.text)}</p>
+                </div>
+            `).join('');
+        }
+
+        // Chat
+        function toggleTelegramChat() {
+            const chat = document.getElementById('telegramChat');
+            chat.classList.toggle('active');
+            if (chat.classList.contains('active')) document.getElementById('chatInput').focus();
+        }
+        function loadChatMessages() {
+            const messages = JSON.parse(localStorage.getItem('kepkg_chat') || '[]');
+            const container = document.getElementById('chatMessages');
+            if (messages.length === 0) return;
+            container.innerHTML = messages.map(m => `<div class="chat-message ${m.type}">${escapeHtml(m.text)}</div>`).join('');
+            container.scrollTop = container.scrollHeight;
+        }
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim(); if (!text) return;
+            const messages = JSON.parse(localStorage.getItem('kepkg_chat') || '[]');
+            messages.push({ type: 'user', text, timestamp: Date.now() });
+            localStorage.setItem('kepkg_chat', JSON.stringify(messages));
+            setTimeout(() => {
+                messages.push({ type: 'bot', text: 'Рахмат! Тез арада жооп беребиз 🙏✨', timestamp: Date.now() });
+                localStorage.setItem('kepkg_chat', JSON.stringify(messages));
+                loadChatMessages();
+            }, 700);
+            input.value = ''; loadChatMessages();
+        }
+
+        // Admin
+        function openAdmin() {
+            document.getElementById('adminOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (!adminLoggedIn) renderAdminLogin(); else renderAdminDashboard();
+        }
+        function closeAdmin() {
+            document.getElementById('adminOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function renderAdminLogin() {
+            document.getElementById('adminPanel').innerHTML = `
+                <button class="admin-close" onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+                <div class="admin-login">
+                    <h2><i class="fas fa-lock"></i> Админ кирүү</h2>
+                    <input type="password" id="adminPassword" placeholder="Пароль..." onkeypress="if(event.key==='Enter')adminLogin()">
+                    <button class="btn-primary" onclick="adminLogin()" style="width:100%;justify-content:center;">Кирүү</button>
+                    <p style="margin-top:14px;color:var(--text-muted);font-size:0.95rem;">Пароль: <strong>kepkg2026</strong></p>
+                </div>
+            `;
+        }
+        function adminLogin() {
+            if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) {
+                adminLoggedIn = true; renderAdminDashboard(); showToast('Админ панельге кирдиңиз! ✅✨', 'success');
+            } else showToast('Туура эмес пароль!', 'error');
+        }
+        function renderAdminDashboard() {
+            const all = window.allProductsData || defaultProducts;
+            let list = [];
+            for (const [cat, products] of Object.entries(all)) products.forEach(p => list.push({ ...p, category: cat }));
+            document.getElementById('adminPanel').innerHTML = `
+                <button class="admin-close" onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+                <h2><i class="fas fa-cog"></i> Админ панель</h2>
+                <div class="admin-form">
+                    <h3>➕ Жаңы товар</h3>
+                    <div class="form-group"><label>Аты</label><input type="text" class="form-input" id="adminName" placeholder="Товар аты"></div>
+                    <div class="form-group"><label>Баасы (сом)</label><input type="number" class="form-input" id="adminPrice" placeholder="1000"></div>
+                    <div class="form-group"><label>Категория</label><select class="form-select" id="adminCategory"><option value="kepka">Кепкалар</option><option value="footballka">Футболкалар</option><option value="sviter">Свитерлер</option><option value="shym">Шымдар</option></select></div>
+                    <div class="form-group"><label>Сүрөт</label><div style="display:flex;gap:8px;margin-bottom:8px;"><button type="button" class="filter-btn active" onclick="toggleImgMethod('url')" id="urlBtn">🔗 URL</button><button type="button" class="filter-btn" onclick="toggleImgMethod('file')" id="fileBtn">📁 Файл</button></div><input type="text" class="form-input" id="adminImage" placeholder="https://..." data-method="url"><input type="file" class="form-input" id="adminFile" accept="image/*" style="display:none;" data-method="file" onchange="previewImage(this)"><div class="image-preview-container" id="imgPreview"><img src="" class="image-preview" id="previewImg"><div class="image-preview-label">Сүрөт жүктөлдү</div></div></div>
+                    <div class="form-group"><label>Badge</label><select class="form-select" id="adminBadge"><option value="">Жок</option><option value="Жаңы">Жаңы</option><option value="Хит">Хит</option><option value="Premium">Premium</option></select></div>
+                    <div class="checkbox-group"><input type="checkbox" id="adminPromo"><label for="adminPromo">🔥 Акциялык товар</label></div>
+                    <button class="btn-primary" onclick="addProduct()" style="width:100%;justify-content:center;margin-top:10px;"><i class="fas fa-plus"></i> Кошуу</button>
+                </div>
+                <div class="edit-form" id="editForm"><h4>✏️ Өзгөртүү</h4><div class="form-group"><label>Аты</label><input type="text" class="form-input" id="editName"></div><div class="form-group"><label>Баасы</label><input type="number" class="form-input" id="editPrice"></div><div class="form-group"><label>Badge</label><select class="form-select" id="editBadge"><option value="">Жок</option><option value="Жаңы">Жаңы</option><option value="Хит">Хит</option><option value="Premium">Premium</option></select></div><div class="checkbox-group"><input type="checkbox" id="editPromo"><label for="editPromo">🔥 Акциялык</label></div><div style="display:flex;gap:8px;margin-top:12px;"><button class="btn-primary" onclick="saveEdit()" style="flex:1;">💾 Сактоо</button><button class="btn-outline" onclick="cancelEdit()" style="flex:1;">Жок</button></div></div>
+                <div class="admin-products-list"><h3>📦 Товарлар (${list.length})</h3>${list.map(p => `<div class="admin-product-item"><img src="${p.image}" onerror="this.src='https://via.placeholder.com/48'"><div class="info"><h4>${p.name} ${p.promo?'<span class="promo-tag">🔥</span>':''}</h4><span>${p.price} сом — ${getCategoryName(p.category)}</span></div><div class="admin-actions">${!isDefault(p.id)?`<button class="edit-btn" onclick="startEdit('${p.id}','${p.category}')"><i class="fas fa-edit"></i></button><button class="delete-btn" onclick="deleteProduct('${p.id}','${p.category}')"><i class="fas fa-trash"></i></button>`:'<span style="font-size:0.75rem;color:var(--text-muted)">Системалык</span>'}</div></div>`).join('')}</div>
+                <button class="admin-logout" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Чыгуу</button>
+            `;
+        }
+        function toggleImgMethod(method) {
+            const url = document.getElementById('adminImage'), file = document.getElementById('adminFile');
+            const urlBtn = document.getElementById('urlBtn'), fileBtn = document.getElementById('fileBtn');
+            const preview = document.getElementById('imgPreview');
+            if (method === 'url') { url.style.display='block'; file.style.display='none'; url.dataset.method='url'; urlBtn.classList.add('active'); fileBtn.classList.remove('active'); preview.classList.remove('active'); }
+            else { url.style.display='none'; file.style.display='block'; file.dataset.method='file'; fileBtn.classList.add('active'); urlBtn.classList.remove('active'); }
+        }
+        function previewImage(input) {
+            const file = input.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => { document.getElementById('previewImg').src = e.target.result; document.getElementById('imgPreview').classList.add('active'); };
+            reader.readAsDataURL(file);
+        }
+        function isDefault(id) { return Object.values(defaultProducts).some(cat => cat.find(p => p.id === id)); }
+        function addProduct() {
+            const name = document.getElementById('adminName').value.trim(), price = parseInt(document.getElementById('adminPrice').value);
+            const category = document.getElementById('adminCategory').value, badge = document.getElementById('adminBadge').value;
+            const promo = document.getElementById('adminPromo').checked;
+            let image = '';
+            const method = document.getElementById('adminImage').style.display !== 'none' ? 'url' : 'file';
+            if (method === 'url') image = document.getElementById('adminImage').value.trim() || 'https://via.placeholder.com/250x240';
+            else { const preview = document.getElementById('previewImg'); image = preview.src || 'https://via.placeholder.com/250x240'; }
+            if (!name || !price) { showToast('Аты жана баасы керек!', 'error'); return; }
+            const newP = { id: 'c_' + Date.now(), name, price, category, image, badge, promo };
+            const custom = JSON.parse(localStorage.getItem('kepkg_custom_products') || '{}');
+            if (!custom[category]) custom[category] = [];
+            custom[category].push(newP);
+            localStorage.setItem('kepkg_custom_products', JSON.stringify(custom));
+            loadAllProducts(); renderAdminDashboard();
+            ['adminName','adminPrice','adminImage','adminFile','adminBadge'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('adminPromo').checked = false;
+            document.getElementById('imgPreview').classList.remove('active');
+            showToast(`${name} кошулду! ✨`, 'success');
+        }
+        function startEdit(id, cat) {
+            const all = window.allProductsData || defaultProducts;
+            const p = all[cat]?.find(x => x.id === id); if (!p) return;
+            editingProductId = id; editingProductCategory = cat;
+            document.getElementById('editName').value = p.name;
+            document.getElementById('editPrice').value = p.price;
+            document.getElementById('editBadge').value = p.badge || '';
+            document.getElementById('editPromo').checked = p.promo || false;
+            document.getElementById('editForm').classList.add('active');
+        }
+        function saveEdit() {
+            if (!editingProductId) return;
+            const name = document.getElementById('editName').value.trim(), price = parseInt(document.getElementById('editPrice').value);
+            const badge = document.getElementById('editBadge').value, promo = document.getElementById('editPromo').checked;
+            if (!name || !price) { showToast('Аты жана баасы керек!', 'error'); return; }
+            const custom = JSON.parse(localStorage.getItem('kepkg_custom_products') || '{}');
+            if (custom[editingProductCategory]) {
+                const idx = custom[editingProductCategory].findIndex(p => p.id === editingProductId);
+                if (idx !== -1) { custom[editingProductCategory][idx] = { ...custom[editingProductCategory][idx], name, price, badge, promo }; localStorage.setItem('kepkg_custom_products', JSON.stringify(custom)); loadAllProducts(); renderAdminDashboard(); cancelEdit(); showToast('Өзгөртүлдү! ✨', 'success'); }
+            }
+        }
+        function cancelEdit() { editingProductId = null; editingProductCategory = null; document.getElementById('editForm').classList.remove('active'); }
+        function deleteProduct(id, cat) {
+            if (!confirm('Өчүрөсүзбү?')) return;
+            const custom = JSON.parse(localStorage.getItem('kepkg_custom_products') || '{}');
+            if (custom[cat]) { custom[cat] = custom[cat].filter(p => p.id !== id); if (!custom[cat].length) delete custom[cat]; localStorage.setItem('kepkg_custom_products', JSON.stringify(custom)); }
+            loadAllProducts(); renderAdminDashboard(); showToast('Өчүрүлдү! 🗑️', 'info');
+        }
+        function adminLogout() { adminLoggedIn = false; editingProductId = null; renderAdminLogin(); showToast('Чыктыңыз', 'info'); }
+
+        // Utils
+        function showToast(msg, type='info') {
+            const c = document.getElementById('toastContainer');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':type==='error'?'exclamation-circle':'info-circle'}"></i> ${msg}`;
+            c.appendChild(t);
+            setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(100px)'; setTimeout(()=>t.remove(),300); }, 3000);
+        }
+        function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+        function formatDate(d) { const dt=new Date(d), m=['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек']; return `${dt.getDate()} ${m[dt.getMonth()]} ${dt.getFullYear()}`; }
+
+        document.addEventListener('keydown', e => { if (e.key==='Escape') { closeCart(); closeMobileMenu(); closeAdmin(); document.getElementById('telegramChat')?.classList.remove('active'); closeOrderModal(); } });
+        document.getElementById('adminOverlay')?.addEventListener('click', e => { if (e.target===document.getElementById('adminOverlay')) closeAdmin(); });
+        document.addEventListener('click', e => { const chat=document.getElementById('telegramChat'), toggle=document.querySelector('.chat-toggle'); if (chat?.classList.contains('active') && !chat.contains(e.target) && !toggle?.contains(e.target)) chat.classList.remove('active'); });
+    </script>
+</body>
+</html>
